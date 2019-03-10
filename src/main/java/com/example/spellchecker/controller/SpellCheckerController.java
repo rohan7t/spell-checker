@@ -13,12 +13,13 @@ import com.example.spellchecker.handler.SpellCheckerHandler;
 @RestController
 public class SpellCheckerController {
 
+    private static final String PATH = "/error";
     @Autowired
     SpellCheckerHandler spellChekerHandler;
 
     @PostMapping("/spellCheck")
     public List<String> spellCheck(@RequestParam String path) throws IOException {
-	if (path == null || path.isEmpty()) {
+	if (path == null || path.isEmpty() || !path.endsWith(".txt")) {
 	    throw new IOException("Given path is not valid");
 	}
 	try {
@@ -27,5 +28,15 @@ public class SpellCheckerController {
 	    throw new IOException(e);
 	}
     }
+
+//    @RequestMapping(value = PATH)
+//    public String error() throws IOException {
+//	throw new IOException("Wrong endpoint accessed");
+//    }
+//
+//    @Override
+//    public String getErrorPath() {
+//	return PATH;
+//    }
 
 }
